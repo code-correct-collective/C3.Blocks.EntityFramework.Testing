@@ -38,7 +38,7 @@
 		<PackageTags>EntityFramework Testing</PackageTags>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<Product>C3.Blocks.EntityFramework.Testing</Product>
-		<!-- <PackageReadmeFile>NUGET.md</PackageReadmeFile> -->
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<RepositoryType>git</RepositoryType>
 		<!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
