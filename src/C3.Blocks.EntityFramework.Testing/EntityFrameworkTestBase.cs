@@ -30,16 +30,16 @@ public abstract class EntityFrameworkTestBase<TDbContext>
     /// <summary>
     /// Runs a test asynchronously with the specified runner and optional setup actions.
     /// </summary>
-    /// <param name="runner">The function to run the test.</param>
-    /// <param name="setup">The optional setup function to prepare the test environment.</param>
+    /// <param name="operationAsync">The function to run the test.</param>
+    /// <param name="setupAsync">The optional setup function to prepare the test environment.</param>
     /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
     protected virtual async Task RunTestAsync(
-        Func<TDbContext, CancellationToken, Task> runner,
-        Func<TDbContext, CancellationToken, Task>? setup = null,
+        Func<TDbContext, CancellationToken, Task> operationAsync,
+        Func<TDbContext, CancellationToken, Task>? setupAsync = null,
         CancellationToken cancellationToken = default)
     {
-        runner = runner ?? throw new ArgumentNullException(nameof(runner));
+        operationAsync = operationAsync ?? throw new ArgumentNullException(nameof(operationAsync));
         using var connection = this.CreateSqlConnection();
         await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
 
@@ -52,17 +52,17 @@ public abstract class EntityFrameworkTestBase<TDbContext>
                 await context.Database.EnsureCreatedAsync(cancellationToken).ConfigureAwait(false);
             }
 
-            if (setup != null)
+            if (setupAsync != null)
             {
                 using (var context = MakeDbContext(options))
                 {
-                    await setup(context, cancellationToken).ConfigureAwait(false);
+                    await setupAsync(context, cancellationToken).ConfigureAwait(false);
                 }
             }
 
             using (var context = MakeDbContext(options))
             {
-                await runner(context, cancellationToken).ConfigureAwait(false);
+                await operationAsync(context, cancellationToken).ConfigureAwait(false);
             }
         }
         catch (Exception x)
