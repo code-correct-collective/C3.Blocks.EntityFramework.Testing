@@ -1,0 +1,23 @@
+{
+   "$schema": "https://alirezanet.github.io/Husky.Net/schema.json",
+   "tasks": [
+      {
+         "name": "dotnet-format",
+         "group": "pre-commit",
+         "command": "dotnet",
+         "args": ["format", "--verify-no-changes", "--no-restore"],
+         "include": ["**/*.cs"],
+         "filteringRule": "staged"
+      },
+      {
+         "name": "dotnet-build-test",
+         "group": "pre-push",
+         "command": "sh",
+         "args": [
+            "-c",
+            "git diff --cached --name-only origin/main | grep -E '\\.cs$' && dotnet build | dotnet test || echo 'No .cs file changes detected, skipping build and test.'"
+         ],
+         "include": ["**/*.cs"]
+      }
+   ]
+}
