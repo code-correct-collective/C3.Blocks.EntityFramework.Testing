@@ -23,6 +23,10 @@
   <PropertyGroup>
     <MinVerTagPrefix>v</MinVerTagPrefix>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <None Include="c3.png" Pack="true" PackagePath="" />
+  </ItemGroup>
 
   <!-- nuget settings-->
   <PropertyGroup>
@@ -52,4 +56,4 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 </Project>
-clear
+
