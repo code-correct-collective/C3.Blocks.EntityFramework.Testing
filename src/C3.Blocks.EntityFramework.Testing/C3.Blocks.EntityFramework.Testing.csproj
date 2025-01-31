@@ -9,6 +9,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.12" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="MinVer" Version="6.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -20,4 +24,30 @@
     <MinVerTagPrefix>v</MinVerTagPrefix>
   </PropertyGroup>
 
+  <!-- nuget settings-->
+  <PropertyGroup>
+    <PackageId>Code-Correct-Collective.Blocks.EntityFramework.Testing</PackageId>
+		<Title>C3.Blocks.EntityFramework.Testing</Title>
+		<Authors>Code Correct Collective</Authors>
+		<Description>A library to ease the testing of EntityFramework based libraries.</Description>
+		<Copyright>Copyright © 2025</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/code-correct-collective/C3.Blocks.EntityFramework.Testing</PackageProjectUrl>
+		<PackageReleaseNotes>Initial Release</PackageReleaseNotes>
+		<PackageTags>C3.Blocks.EntityFramework.Testing</PackageTags>
+		<PackageTags>EntityFramework Testing</PackageTags>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<Product>C3.Blocks.EntityFramework.Testing</Product>
+		<!-- <PackageReadmeFile>NUGET.md</PackageReadmeFile> -->
+		<RepositoryType>git</RepositoryType>
+		<!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+
+		<!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+		<!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
 </Project>
