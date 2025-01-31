@@ -13,7 +13,7 @@ env:
   HUSKY: 0
   CONFIGURATION: 'Release'
 jobs:
-  build_and_test:
+  prep:
     runs-on: ubuntu-latest
     steps:
     - name: 'Checkout'
@@ -26,10 +26,26 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
     - name: Restore Dependencies
       run: dotnet restore
+  lint:
+    runs-on: ubuntu-latest
+    needs: prep
+    steps:
+    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
     - name: Lint Project
       run: dotnet format --verify-no-changes --no-restore
+  build:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
     - name: Build Project
       run: dotnet build --no-restore --configuration ${{ env.CONFIGURATION }}
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
     - name: Test Project
       run: dotnet test --configuration ${{ env.CONFIGURATION }} --no-build --no-restore --collect "XPlat Code Coverage" --results-directory ./coverage
     - name: Report Test Coverage
@@ -51,7 +67,7 @@ jobs:
         recreate: true
         path: ./code-coverage-results.md
   publish:
-    needs: build_and_test
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
