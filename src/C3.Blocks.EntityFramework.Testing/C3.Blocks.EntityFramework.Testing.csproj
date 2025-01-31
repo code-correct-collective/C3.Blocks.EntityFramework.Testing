@@ -27,7 +27,7 @@
   <!-- nuget settings-->
   <PropertyGroup>
     <PackageId>Code-Correct-Collective.Blocks.EntityFramework.Testing</PackageId>
-    <PackageIcon>https://raw.githubusercontent.com/code-correct-collective/C3.Blocks.EntityFramework.Testing/refs/heads/main/c3.png</PackageIcon>
+    <PackageIcon>../../c3.png</PackageIcon>
 		<Title>C3.Blocks.EntityFramework.Testing</Title>
 		<Authors>Code Correct Collective</Authors>
 		<Description>A library to ease the testing of EntityFramework based libraries.</Description>
@@ -39,7 +39,7 @@
 		<PackageTags>EntityFramework Testing</PackageTags>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<Product>C3.Blocks.EntityFramework.Testing</Product>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReadmeFile>../../README.md</PackageReadmeFile>
 		<RepositoryType>git</RepositoryType>
 		<!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -52,3 +52,4 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 </Project>
+clear
