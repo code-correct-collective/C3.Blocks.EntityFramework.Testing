@@ -38,12 +38,24 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
+    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
     - name: Lint Project
       run: dotnet format --verify-no-changes --no-restore
   build:
     runs-on: ubuntu-latest
     needs: lint
     steps:
+    - name: 'Checkout'
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
     - name: Build Project
       run: dotnet build --no-restore --configuration ${{ env.CONFIGURATION }}
   test:
@@ -54,6 +66,10 @@ jobs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
+    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
     - name: Test Project
       run: dotnet test --configuration ${{ env.CONFIGURATION }} --no-build --no-restore --collect "XPlat Code Coverage" --results-directory ./coverage
     - name: Report Test Coverage
@@ -82,6 +98,10 @@ jobs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
+    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
     - name: Pack
       run: dotnet pack -c ${{ env.CONFIGURATION }} --include-symbols -o pack
   publish:
@@ -92,6 +112,10 @@ jobs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
+    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
     - name: publish
       run: dotnet nuget push ./pack/*.nupkg -k ${{ secrets.NUGET_API }} -s https://api.nuget.org/v3/index.json 
 
