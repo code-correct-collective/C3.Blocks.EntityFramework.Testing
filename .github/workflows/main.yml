@@ -66,7 +66,7 @@ jobs:
       with:
         recreate: true
         path: ./code-coverage-results.md
-  publish:
+  pack:
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -74,13 +74,13 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: Pack
         run: dotnet pack -c ${{ env.CONFIGURATION }} --include-symbols -o pack
-      - name: publish
-        run: dotnet nuget push ./pack/*.nupkg -k ${{ secrets.NUGET_API }} -s https://api.nugeto.org/v3/index.json 
+  publish:
+    needs: pack
+    runs-on: ubuntu-latest
+    steps:
+    - name: publish
+      run: dotnet nuget push ./pack/*.nupkg -k ${{ secrets.NUGET_API }} -s https://api.nugeto.org/v3/index.json 
 
 
