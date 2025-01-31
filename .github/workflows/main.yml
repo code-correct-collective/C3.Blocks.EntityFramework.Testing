@@ -13,65 +13,32 @@ env:
   HUSKY: 0
   CONFIGURATION: 'Release'
 jobs:
-  prep:
+  restore-lint-build-test:
     runs-on: ubuntu-latest
     steps:
+
     - name: 'Checkout'
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
+
     - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
+
     - name: Restore Dependencies
       run: dotnet restore
-  lint:
-    runs-on: ubuntu-latest
-    needs: prep
-    steps:
-    - name: 'Checkout'
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
-    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+
     - name: Lint Project
       run: dotnet format --verify-no-changes --no-restore
-  build:
-    runs-on: ubuntu-latest
-    needs: lint
-    steps:
-    - name: 'Checkout'
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+
     - name: Build Project
       run: dotnet build --no-restore --configuration ${{ env.CONFIGURATION }}
-  test:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - name: 'Checkout'
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+
     - name: Test Project
       run: dotnet test --configuration ${{ env.CONFIGURATION }} --no-build --no-restore --collect "XPlat Code Coverage" --results-directory ./coverage
+
     - name: Report Test Coverage
       uses: 'irongut/CodeCoverageSummary@v1.3.0'
       with:
@@ -82,40 +49,20 @@ jobs:
         indicators: true
         output: both
         thresholds: 60 80 
+
     - name: Add Coverage to Action Summary
       run: cat ./code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+
     - name: Add Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2
       if: github.event_name == 'pull_request'
       with:
         recreate: true
         path: ./code-coverage-results.md
-  pack:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-    - name: 'Checkout'
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+
     - name: Pack
       run: dotnet pack -c ${{ env.CONFIGURATION }} --include-symbols -o pack
-  publish:
-    needs: pack
-    runs-on: ubuntu-latest
-    steps:
-    - name: 'Checkout'
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
     - name: publish
       run: dotnet nuget push ./pack/*.nupkg -k ${{ secrets.NUGET_API }} -s https://api.nuget.org/v3/index.json 
 
