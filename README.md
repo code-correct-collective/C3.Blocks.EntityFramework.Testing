@@ -13,7 +13,8 @@ to connect to the database engine of your choice.
 
 1. Create a subclass of `EntityFrameworkTestBase` (See [EntityFrameworkSqliteTestBase](./src/C3.Blocks.EntityFramework.Testing/EntityFrameworkSqliteTestBase.cs) as an example):
    ```csharp
-    public abstract class EntityFrameworkSqliteTestBase<TDbContext> : EntityFrameworkTestBase<TDbContext>
+    public abstract class EntityFrameworkSqliteTestBase<TDbContext> : 
+        EntityFrameworkTestBase<TDbContext>
         where TDbContext : DbContext
     {
         protected override DbConnection CreateSqlConnection() => 
