@@ -16,7 +16,8 @@ to connect to the database engine of your choice.
     public abstract class EntityFrameworkSqliteTestBase<TDbContext> : EntityFrameworkTestBase<TDbContext>
         where TDbContext : DbContext
     {
-        protected override DbConnection CreateSqlConnection() => new SqliteConnection("Datasource=:memory:");
+        protected override DbConnection CreateSqlConnection() => 
+            new SqliteConnection("Datasource=:memory:");
 
         protected override DbContextOptions<TDbContext> MakeDbContextOptions(
             DbContextOptionsBuilder<TDbContext> dbContextOptionsBuilder,
