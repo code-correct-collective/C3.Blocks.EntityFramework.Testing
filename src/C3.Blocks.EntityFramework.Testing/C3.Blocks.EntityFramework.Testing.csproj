@@ -27,7 +27,7 @@
   <!-- nuget settings-->
   <PropertyGroup>
     <PackageId>Code-Correct-Collective.Blocks.EntityFramework.Testing</PackageId>
-    <PackageIcon>c3.png</PackageIcon>
+    <PackageIcon>https://raw.githubusercontent.com/code-correct-collective/C3.Blocks.EntityFramework.Testing/refs/heads/main/c3.png</PackageIcon>
 		<Title>C3.Blocks.EntityFramework.Testing</Title>
 		<Authors>Code Correct Collective</Authors>
 		<Description>A library to ease the testing of EntityFramework based libraries.</Description>
