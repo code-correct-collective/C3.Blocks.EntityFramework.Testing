@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace C3.Blocks.Repository.Testing.Sqlite.Tests.EntityFramework;
+namespace C3.Blocks.EntityFramework.Testing.Tests;
 
 [PrimaryKey(nameof(Id))]
 public class TestDomainObject

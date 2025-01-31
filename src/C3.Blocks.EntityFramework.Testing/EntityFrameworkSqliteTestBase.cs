@@ -2,7 +2,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 
-namespace C3.Blocks.Repository.Testing.Sqlite;
+namespace C3.Blocks.EntityFramework.Testing;
 
 /// <summary>
 /// Provides a base class for running tests with an in-memory SQLite database.

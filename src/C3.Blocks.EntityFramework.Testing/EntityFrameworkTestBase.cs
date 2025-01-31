@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
 
-namespace C3.Blocks.Repository.Testing.Sqlite;
+namespace C3.Blocks.EntityFramework.Testing;
 
 /// <summary>
 /// Base class for Entity Framework tests using SQLite.

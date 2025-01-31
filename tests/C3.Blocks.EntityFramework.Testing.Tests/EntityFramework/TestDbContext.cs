@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace C3.Blocks.Repository.Testing.Sqlite.Tests.EntityFramework;
+namespace C3.Blocks.EntityFramework.Testing.Tests;
 
 public class TestDbContext : DbContext
 {
