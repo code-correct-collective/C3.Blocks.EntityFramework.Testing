@@ -1,0 +1,52 @@
+name: Build C3.Blocks.EntityFramework.Testing
+on:
+  push:
+    branches:
+      - '**'
+    paths-ignore:
+      - '**/*.md'
+      - '.vscode/**'
+      - '.devcontainer/**'
+      - '.husky/**'
+env:
+  DOTNET_VERSION: '9.0.x'
+  HUSKY: 0
+  CONFIGURATION: 'Release'
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Checkout'
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    - name: Restore Dependencies
+      run: dotnet restore
+    - name: Lint Project
+      run: dotnet format --verify-no-changes --no-restore
+    - name: Build Project
+      run: dotnet build --no-restore --configuration ${{ env.CONFIGURATION }}
+    - name: Test Project
+      run: dotnet test --configuration ${{ env.CONFIGURATION }} --no-build --no-restore --collect "XPlat Code Coverage" --results-directory ./coverage
+    - name: Report Test Coverage
+      uses: 'irongut/CodeCoverageSummary@v1.3.0'
+      with:
+        filename: ./coverage/**/coverage.cobertura.xml
+        badge: true
+        fail_below_min: false
+        format: markdown
+        indicators: true
+        output: both
+        thresholds: 60 80 
+    - name: Add Coverage to Action Summary
+      run: cat ./code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+    - name: Add Coverage PR Comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: github.event_name == 'pull_request'
+      with:
+        recreate: true
+        path: ./code-coverage-results.md
