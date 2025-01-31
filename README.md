@@ -7,6 +7,8 @@ The library attempts to be unopinionated in that you can use the [EntityFramewor
 to test against an in-memory sqlite database. You can also create a new subclass of [EntityFrameworkTestBase](./src/C3.Blocks.EntityFramework.Testing/EntityFrameworkTestBase.cs)
 to connect to the database engine of your choice.
 
+[![Open in DevPod!](https://devpod.sh/assets/open-in-devpod.svg)](https://devpod.sh/open#https://github.com/code-correct-collective/C3.Blocks.EntityFramework.Testing)
+
 ## Connecting to a custom database engine
 
 1. Create a subclass of `EntityFrameworkTestBase` (See [EntityFrameworkSqliteTestBase](./src/C3.Blocks.EntityFramework.Testing/EntityFrameworkSqliteTestBase.cs) as an example):
