@@ -1,5 +1,7 @@
 # C3.Blocks.EntityFramework.Testing
 
+[![Open in DevPod!](https://devpod.sh/assets/open-in-devpod.svg)](https://devpod.sh/open#https://github.com/code-correct-collective/C3.Blocks.EntityFramework.Testing)
+
 This library is a simple library to assist with testing EntityFramework libraries against a Sqlite database
 or some other database type.
 
