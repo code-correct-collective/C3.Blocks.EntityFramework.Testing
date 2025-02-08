@@ -70,7 +70,7 @@ public class TestDbContextTests : EntityFrameworkSqliteTestBase<TestDbContext>
             }
         );
     }
-    // Other test remove fro brevity
+    // Other test remove for brevity
 }
 ```
 
