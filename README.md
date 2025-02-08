@@ -1,5 +1,10 @@
 # C3.Blocks.EntityFramework.Testing
 
+[![Build](https://github.com/code-correct-collective/C3.Blocks.EntityFramework.Testing/actions/workflows/main.yml/badge.svg)](https://github.com/code-correct-collective/C3.Blocks.EntityFramework.Testing/actions/workflows/main.yml)
+[![License](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/code-correct-collective/C3.Blocks.EntityFramework.Testing/raw/refs/heads/main/LICENSE)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
+[![Nuget V](https://img.shields.io/nuget/v/CodeCorrectCollective.Blocks.EntityFramework.Testing.svg)](https://www.nuget.org/packages/CodeCorrectCollective.Blocks.EntityFramework.Testing)
+[![Nuget dl](https://img.shields.io/nuget/dt/CodeCorrectCollective.Blocks.EntityFramework.Testing.svg)](https://www.nuget.org/packages/CodeCorrectCollective.Blocks.EntityFramework.Testing)
 This library is a simple library to assist with testing EntityFramework libraries against a Sqlite database
 or some other database type.
 
