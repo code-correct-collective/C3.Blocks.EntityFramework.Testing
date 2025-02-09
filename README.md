@@ -45,6 +45,16 @@ See [TestDbContextTests](./tests/C3.Blocks.EntityFramework.Testing.Tests/TestDbC
 ```csharp
 public class TestDbContextTests : EntityFrameworkSqliteTestBase<TestDbContext>
 {
+    protected override DbContextOptions<NanoNotesDbContext> MakeDbContextOptions(DbContextOptionsBuilder<NanoNotesDbContext> dbContextOptionsBuilder, DbConnection connection)
+    {
+        ArgumentNullException.ThrowIfNull(dbContextOptionsBuilder, nameof(dbContextOptionsBuilder));
+
+        return base.MakeDbContextOptions(
+            dbContextOptionsBuilder.EnableSensitiveDataLogging(), // Override to enable sensitive logging if needed.
+            connection
+        );
+    }
+
     [Fact]
     public async Task RunTestMethodTest()
     {
