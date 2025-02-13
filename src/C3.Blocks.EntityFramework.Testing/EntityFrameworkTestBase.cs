@@ -34,36 +34,30 @@ public abstract class EntityFrameworkTestBase<TDbContext>
     /// <param name="setupAsync">The optional setup function to prepare the test environment.</param>
     /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
+    /// <exception cref="ArgumentNullException"><c>operationAsync</c> must not be null.</exception>
     protected virtual async Task RunTestAsync(
         Func<TDbContext, CancellationToken, Task> operationAsync,
         Func<TDbContext, CancellationToken, Task>? setupAsync = null,
         CancellationToken cancellationToken = default)
     {
-        operationAsync = operationAsync ?? throw new ArgumentNullException(nameof(operationAsync));
+        ArgumentNullException.ThrowIfNull(operationAsync, nameof(operationAsync));
         using var connection = this.CreateSqlConnection();
-        await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
 
         try
         {
+            await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
             var options = this.MakeDbContextOptions(new DbContextOptionsBuilder<TDbContext>(), connection);
 
-            using (var context = MakeDbContext(options))
-            {
-                await context.Database.EnsureCreatedAsync(cancellationToken).ConfigureAwait(false);
-            }
+            await CreateDbSchema(options, cancellationToken).ConfigureAwait(false);
 
             if (setupAsync != null)
             {
-                using (var context = MakeDbContext(options))
-                {
-                    await setupAsync(context, cancellationToken).ConfigureAwait(false);
-                }
+                using var setupContext = MakeDbContext(options);
+                await setupAsync(setupContext, cancellationToken).ConfigureAwait(false);
             }
 
-            using (var context = MakeDbContext(options))
-            {
-                await operationAsync(context, cancellationToken).ConfigureAwait(false);
-            }
+            using var context = MakeDbContext(options);
+            await operationAsync(context, cancellationToken).ConfigureAwait(false);
         }
         catch (Exception x)
         {
@@ -74,6 +68,12 @@ public abstract class EntityFrameworkTestBase<TDbContext>
         {
             await connection.CloseAsync().ConfigureAwait(false);
         }
+    }
+
+    private static async Task CreateDbSchema(DbContextOptions<TDbContext> options, CancellationToken cancellationToken)
+    {
+        using var createSchema = MakeDbContext(options);
+        await createSchema.Database.EnsureCreatedAsync(cancellationToken).ConfigureAwait(false);
     }
 
     private static TDbContext MakeDbContext(DbContextOptions<TDbContext> options)
